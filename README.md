@@ -12,7 +12,19 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
-
+create table task (
+  id integer
+  detail string
+  deadline date
+  status integer, default 0
+  label string
+  )
+create table user (
+  id integer
+  name string
+  password password
+  admin integer default 0
+  )
 * Database initialization
 
 * How to run the test suite
