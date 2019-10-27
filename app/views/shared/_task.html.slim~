@@ -1,5 +1,7 @@
 .task
-  =task.title
-  =task.detail
-  =task.deadline
-  =task.status
+  p=task.title
+  p=task.detail
+  p=task.deadline
+  p=task.status
+  -if request.path == '/'
+    =link_to '詳細を見る', task_path(task.id) 

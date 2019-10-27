@@ -1,7 +1,7 @@
 = provide(:title, 'Tasks')
 .container
   .row
-   h1 Tasks
+   h1 Task
    = render 'shared/task', task: @task
 
 
