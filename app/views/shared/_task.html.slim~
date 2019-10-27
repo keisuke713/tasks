@@ -1,0 +1,5 @@
+.task
+  =task.title
+  =task.detail
+  =task.deadline
+  =task.status
