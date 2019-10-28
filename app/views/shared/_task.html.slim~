@@ -3,5 +3,6 @@
   p=task.detail
   p=task.deadline
   p=task.status
-  -if request.path == '/'
+  -if root_path? 
     =link_to '詳細を見る', task_path(task.id) 
+

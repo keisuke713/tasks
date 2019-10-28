@@ -1,3 +1,4 @@
-def roo_path?
+include UrlHelper
+def root_path?
   request_path == '/'
 end
