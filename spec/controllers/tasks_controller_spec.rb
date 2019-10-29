@@ -20,6 +20,47 @@ RSpec.describe TasksController, type: :controller do
     end
   end
   
+  describe "GET #new" do
+    it "returns http success" do
+      get :new
+      expect(response.status).to eq 200
+    end
+    it "render new" do
+      get :new
+      expect(response).to render_template 'new'
+    end
+  end
+
+  describe "POST #create" do
+    let!(:task_params) {
+      FactoryBot.attributes_for(:task)
+    }
+    context "parameter is correct" do
+      it "inserted record" do
+        expect {
+          post :create, params: task_params
+        }.to change(Task, :count).by 1
+      end
+      it "redirect show page" do
+        post :create, params: task_params
+        expect(response).redirect_to tasks_path
+      end
+    end
+    context "parameter is incorrect" do
+      before do
+        task_params[:title] = ''
+      end
+      it "didn't insert record" do
+        expect {
+          post :create, params: task_params
+        }.to change(Task, :count).by 0
+      end
+      it "render new" do
+        expect(response).to render_template 'new'
+      end
+    end
+  end
+  
   describe "GET #show" do
     let!(:task) {
       FactoryBot.create(:task)
@@ -39,5 +80,35 @@ RSpec.describe TasksController, type: :controller do
       get :show, params: id
       expect(response).to render_template 'show'
     end 
+  end
+  
+  describe "GET #edit" do
+    it "request http success" do
+
+    end
+    it "assigns task" do
+
+    end
+    it "render edit page" do
+      
+    end
+  end
+  describe "PUT #update" do
+    context "parameter is correct" do
+      it "update record" do
+        
+      end
+      it "redirect show page" do
+
+      end
+    end
+    context "parameter is incorrect" do
+      it "doesn't update record" do
+
+      end
+      it "render show page" do
+
+      end
+    end
   end
 end
