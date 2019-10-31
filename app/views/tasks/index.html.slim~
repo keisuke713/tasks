@@ -1,8 +1,0 @@
-= provide(:title, 'All tasks')
-.container
-  .row
-    h1 All Tasks
-    .tasks
-      = render partial: 'shared/task', collection: @tasks
-    -@tasks.each do |task|
-     =task.title

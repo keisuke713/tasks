@@ -1,8 +1,0 @@
-.task
-  p=task.title
-  p=task.detail
-  p=task.deadline
-  p=task.status
-  -if root_path? 
-    =link_to '詳細を見る', task_path(task.id) 
-
