@@ -11,3 +11,5 @@
 
       = f.label :deadline
       = f.date_select(:deadline, start_year: Time.now.year, end_year: Time.now.year + 3, default: Date.today)
+
+      = f.submit 

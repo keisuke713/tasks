@@ -10,8 +10,6 @@
   padding: 0 340px;
 }
 
-
-
 .task {
   margin: 0 auto;
   height: 200px;
@@ -22,5 +20,10 @@
   background: #FFF;
   border: solid 3px #6091d3;
   border-radius: 10px;
+}
+
+.item {
+  display: block;
+  padding: 0.3em;
 }
 

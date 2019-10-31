@@ -3,13 +3,17 @@
   .row
     h1 New Task
     = form_with model: Task.new do |f|
-      = f.label :title
-      = f.text_field :title
+     .item
+       = f.label :title
+       = f.text_field :title
 
-      = f.label :detail
-      = f.text_field :detail
+     .item
+       = f.label :detail
+       = f.text_field :detail
 
-      = f.label :deadline
-      = f.date_select(:deadline, start_year: Time.now.year, end_year: Time.now.year + 3, default: Date.today)
+     .item
+       = f.label :deadline
+       = f.date_select(:deadline, start_year: Time.now.year, end_year: Time.now.year + 3, default: Date.today)
 
-      = f.submit 
+     .item
+       = f.submit
