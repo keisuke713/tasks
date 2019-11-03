@@ -2,7 +2,9 @@
 .container
   .row
     h1 New Task
-    = form_with model: Task.new do |f|
+    -@task.errors.full_messages.each do |message|
+      = message
+    = form_with model: @task do |f|
      .item
        = f.label :title
        = f.text_field :title
@@ -16,4 +18,4 @@
        = f.date_select(:deadline, start_year: Time.now.year, end_year: Time.now.year + 3, default: Date.today)
 
      .item
-       = f.submit
+       = f.submit 'confirm'
