@@ -31,6 +31,26 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe "POST #confirm" do
+    let(:valid_attributes) {
+      FactoryBot.attributes_for(:task)
+    }
+    let(:params) {
+      FactoryBot.attributes_for(:task) 
+    }
+    let(:tasks) {
+      FactoryBot.build(:task)
+    }
+    it 'assigns object' do
+      post :confirm, params: params
+      expect(assings(:task)).to eq tasks
+    end
+    it 'render show page' do
+      post :confirm, params: params
+      expect(response).to render_template 'show'
+    end
+  end
+
   describe "POST #create" do
     let!(:task_params) {
       FactoryBot.attributes_for(:task)
