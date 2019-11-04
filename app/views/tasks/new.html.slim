@@ -2,20 +2,19 @@
 .container
   .row
     h1 New Task
-    -@task.errors.full_messages.each do |message|
-      = message
-    = form_with model: @task do |f|
+    -if @task.errors.any?
+      -@task.errors.full_messages.each do |message|
+        p = message
+
+    = form_with model: @task, url: confirm_new_task_path, local: true do |f|
      .item
        = f.label :title
        = f.text_field :title
-
      .item
        = f.label :detail
        = f.text_field :detail
-
      .item
        = f.label :deadline
        = f.date_select(:deadline, start_year: Time.now.year, end_year: Time.now.year + 3, default: Date.today)
-
      .item
        = f.submit 'confirm'

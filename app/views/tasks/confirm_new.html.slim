@@ -1,0 +1,20 @@
+= provide(:title, 'confirm')
+.container
+  .row
+    h1 confirm
+    = form_with model: @task, local: true do |f|
+      .item
+        = f.label :title
+        = @task.title
+        = f.hidden_field :title, value: @task.title
+      .item
+        = f.label :detail
+        = @task.detail
+        = f.hidden_field :detail, value: @task.detail
+      .item
+        = f.label :deadline
+        = @task.deadline
+        = f.hidden_field :deadline, value: @task.deadline
+      .item
+        = f.submit 'back', name: 'back'
+        = f.submit 'create'

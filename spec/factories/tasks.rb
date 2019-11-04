@@ -4,6 +4,6 @@ FactoryBot.define do
     detail "MyString"
     deadline "2019-10-23"
     status 0 
-    label "MyString"
+    label nil
   end
 end
