@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 describe 'Task', type: :system do
-  describe 'show' do
+  describe 'index' do
     before do
       FactoryBot.create(:task)  
       visit '/'
     end
     it 'show task' do
       expect(page).to have_content 'MyTask'
+      expect(page).to have_content 'MyString'
+      expect(page).to have_content Date.today
+      expect(page).to have_content 'work'
     end
   end
 
@@ -17,13 +20,15 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Label', with: 'work'
         click_button 'confirm'
       end
       it 'transition confirm' do
-        expect(page).to have_title 'confirm'
+        expect(page).to have_title 'Confirm'
         expect(page).to have_content 'MyTask'
         expect(page).to have_content 'MyDetail'
         expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
         expect(page).to have_button 'back'
         expect(page).to have_button 'create'
       end
@@ -34,6 +39,7 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: ''
+        fill_in 'Label', with: 'work'
         click_button
       end
       it 'display error message' do
@@ -49,14 +55,16 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Label', with: 'work'
         click_button 'confirm'
         click_button 'create'
       end
       it 'is registered' do
-        expect(page).to have_title 'Tasks'
+        expect(page).to have_title 'Task'
         expect(page).to have_content 'MyTask'
         expect(page).to have_content 'MyDetail'
-        expect(page).to have_content '2019-11-06'
+        expect(page).to have_content 'work'
+        expect(page).to have_content Date.today 
         expect(page).to have_content 'waiting'
         expect(page).to have_link '編集する'
       end
@@ -66,6 +74,7 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Label', with: 'work'
         click_button 'confirm'
         click_button 'back'
       end
@@ -73,8 +82,32 @@ describe 'Task', type: :system do
         expect(page).to have_title 'New Task'
         expect(page).to have_content 'Title'
         expect(page).to have_content 'Detail'
-        expect(page).to have_content 'Deadlie'
+        expect(page).to have_content 'Deadline'
+        expect(page).to have_content 'Label'
       end
+    end
+  end
+  describe 'edit task' do
+    let(:task) {
+      FactoryBot.create(:task)
+    }
+    before do
+      visit task_path task.id
+      click_link '編集する'
+    end
+    context 'parameter is correct' do
+      before do
+        fill_in 'Title', with: 'Edit task'
+        click_button 'confirm'
+      end
+      it 'transition confirm screen' do
+        expect(page).to have_title 'confirm'
+        expect(page).to have_content 'Edit task'
+        expect(page).to have_content 'MyString'
+      end
+    end
+    context 'parameter is incorrect' do
+
     end
   end
 end

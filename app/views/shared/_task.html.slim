@@ -3,6 +3,7 @@
   p=task.detail
   p=task.deadline
   p=task.status
+  p=task.label
   -if root_path? 
     = link_to '詳細を見る', task_path(task.id) 
   -else

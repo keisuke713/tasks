@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :task do
     title  "MyTask"
     detail "MyString"
-    deadline "2019-10-23"
+    deadline Date.today
     status 0 
-    label nil
+    label :work
   end
 end

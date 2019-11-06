@@ -1,4 +1,4 @@
-= provide(:title, 'confirm')
+= provide(:title, 'Confirm')
 .container
   .row
     h1 confirm
@@ -15,6 +15,10 @@
         = f.label :deadline
         = @task.deadline
         = f.hidden_field :deadline, value: @task.deadline
+      .item
+        = f.label :label
+        = @task.label
+        = f.hidden_field :label, value: @task.label
       .item
         = f.submit 'back', name: 'back'
         = f.submit 'create'

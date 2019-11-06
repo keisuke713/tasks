@@ -9,7 +9,7 @@ class TasksController < ApplicationController
 
   def confirm_new
     @task = Task.new(task_params)
-
+    
     if @task.valid?
     else
       render 'new'
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-
+    byebug
     if params[:back].present?
       render 'new'
       return      
@@ -27,6 +27,8 @@ class TasksController < ApplicationController
     if @task.save
       flash[:success] = 'Success in creating task'
       redirect_to task_path @task.id
+    else
+      render 'confirm_new'
     end
   end
 
@@ -37,6 +39,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline)
+    params.require(:task).permit(:title, :detail, :deadline, :label)
   end
 end

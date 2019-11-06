@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_224124) do
     t.string "detail", null: false
     t.date "deadline", null: false
     t.integer "status", default: 0
-    t.string "label"
+    t.string "label", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
