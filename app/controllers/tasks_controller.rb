@@ -18,7 +18,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    byebug
+
     if params[:back].present?
       render 'new'
       return      

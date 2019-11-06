@@ -101,13 +101,52 @@ describe 'Task', type: :system do
         click_button 'confirm'
       end
       it 'transition confirm screen' do
-        expect(page).to have_title 'confirm'
+        expect(page).to have_title 'Confirm'
         expect(page).to have_content 'Edit task'
         expect(page).to have_content 'MyString'
+        expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
       end
     end
     context 'parameter is incorrect' do
-
+      before do
+        fill_in 'Title', with: ''
+        click_button 'confirm'
+      end
+      it 'render new screen' do
+        expect(page).to have_title ''
+        expect(page).to have_content 'MyString'
+        expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
+      end
+    end
+    context 'edit task' do
+      before do
+        fill_in 'Title', with: 'Edit Task'
+        click_button 'confirm'
+        click_button 'edit'
+      end
+      it 'can be updated' do
+        expect(page).to have_title 'Task'
+        expect(page).to have_content 'Edit Task'
+        expect(page).to have_content 'MyString'
+        expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
+      end
+    end
+    context 'back to edit screen' do
+      before do
+        fill_in 'Title', with: 'Edit Task'
+        click_button 'confirm'
+        click_button 'back'
+      end
+      it 'render new screen' do
+        expect(page).to have_title 'Edit Task'
+        expect(page).to have_content 'Edit Task'
+        expect(page).to have_content 'MyString'
+        expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
+      end
     end
   end
 end
