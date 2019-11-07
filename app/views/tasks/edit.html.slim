@@ -1,0 +1,6 @@
+= provide(:title, 'Edit Task')
+.container
+  .row
+    .h1 Edit Task
+    = render 'shared/error', object: @task
+    = render 'shared/task_form', task: @task, url: confirm_edit_task_path

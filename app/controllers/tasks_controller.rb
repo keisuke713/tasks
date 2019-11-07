@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :fetch_current_task, only: [:show, :edit]
+
   def index
     @tasks = Task.all
   end
@@ -33,12 +35,18 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+  end
+
+  def edit
   end
 
   private
 
   def task_params
     params.require(:task).permit(:title, :detail, :deadline, :label)
+  end
+
+  def fetch_current_task
+    @task = Task.find(params[:id])
   end
 end
