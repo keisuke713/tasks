@@ -125,7 +125,7 @@ describe 'Task', type: :system do
       before do
         fill_in 'Title', with: 'Edit Task'
         click_button 'confirm'
-        click_button 'edit'
+        click_button 'update'
       end
       it 'can be updated' do
         expect(page).to have_title 'Task'
@@ -143,10 +143,8 @@ describe 'Task', type: :system do
       end
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
-        expect(page).to have_content 'MyTask'
-        expect(page).to have_content 'MyString'
-        expect(page).to have_content task.deadline
-        expect(page).to have_content 'work'
+        expect(page).to have_content 'Edit Task'
+        expect(page).to have_button 'confirm'
       end
     end
   end
