@@ -104,8 +104,10 @@ describe 'Task', type: :system do
         expect(page).to have_title 'Confirm'
         expect(page).to have_content 'Edit task'
         expect(page).to have_content 'MyString'
-        expect(page).to have_content Date.today
+        expect(page).to have_content task.deadline
         expect(page).to have_content 'work'
+        expect(page).to have_button 'update'
+        expect(page).to have_button 'back'
       end
     end
     context 'parameter is incorrect' do
@@ -114,10 +116,9 @@ describe 'Task', type: :system do
         click_button 'confirm'
       end
       it 'render new screen' do
-        expect(page).to have_title ''
-        expect(page).to have_content 'MyString'
-        expect(page).to have_content Date.today
-        expect(page).to have_content 'work'
+        expect(page).to have_title 'Edit Task'
+        expect(page).to have_content "Title can't be blank"
+        expect(page).to have_button 'confirm'
       end
     end
     context 'edit task' do
@@ -130,7 +131,7 @@ describe 'Task', type: :system do
         expect(page).to have_title 'Task'
         expect(page).to have_content 'Edit Task'
         expect(page).to have_content 'MyString'
-        expect(page).to have_content Date.today
+        expect(page).to have_content task.deadline
         expect(page).to have_content 'work'
       end
     end
@@ -142,9 +143,9 @@ describe 'Task', type: :system do
       end
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
-        expect(page).to have_content 'Edit Task'
+        expect(page).to have_content 'MyTask'
         expect(page).to have_content 'MyString'
-        expect(page).to have_content Date.today
+        expect(page).to have_content task.deadline
         expect(page).to have_content 'work'
       end
     end

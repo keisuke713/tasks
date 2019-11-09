@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :fetch_current_task, only: [:show, :edit]
+  before_action :fetch_current_task, only: [:show, :edit, :confirm_edit]
 
   def index
     @tasks = Task.all
@@ -38,6 +38,15 @@ class TasksController < ApplicationController
   end
 
   def edit
+  end
+
+  def confirm_edit
+    @task.attributes = task_params
+
+    if @task.valid?
+    else
+      render 'edit'
+    end
   end
 
   private
