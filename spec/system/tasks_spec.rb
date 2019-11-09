@@ -148,4 +148,24 @@ describe 'Task', type: :system do
       end
     end
   end
+  describe "validate_deadline" do
+    context 'set a deadline before today' do
+      let(:date) {
+        Date.today - 1 
+      }
+      before do
+        visit new_task_path
+        fill_in 'Title', with: 'MyTask'
+        fill_in 'Detail', with: 'MyDetail'
+        select date.year, from: 'task_deadline_1i'
+        select date.mon, from: 'task_deadline_2i'
+        select date.day, from: 'task_deadline_3i'
+        fill_in 'Label', with: 'work'
+        click_button 'confirm'
+      end
+      it 'is displayed error message' do
+        expect(page).to have_content 'The deadline is past'
+      end
+    end
+  end
 end
