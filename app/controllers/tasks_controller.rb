@@ -12,8 +12,8 @@ class TasksController < ApplicationController
 
   def confirm_new
     @task = Task.new(task_params)
-    
     if @task.valid?
+
     else
       render 'new'
     end

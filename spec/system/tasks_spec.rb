@@ -164,7 +164,7 @@ describe 'Task', type: :system do
         click_button 'confirm'
       end
       it 'is displayed error message' do
-        expect(page).to have_content 'The deadline is past'
+        expect(page).to have_content "#{date}は過去の日付です"
       end
     end
   end
