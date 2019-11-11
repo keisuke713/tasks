@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 describe 'Task', type: :system do
+  let(:user) {
+    FactoryBot.create(:user)
+  }
+  before do
+    login_as(user, scope: :user)
+  end
   describe 'index' do
     before do
       FactoryBot.create(:task)  
