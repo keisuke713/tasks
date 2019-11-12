@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 2019_11_11_214652) do
     t.date "deadline", null: false
     t.integer "status", default: 0
     t.string "label", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
