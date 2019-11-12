@@ -4,6 +4,12 @@ describe 'Task', type: :system do
   let(:user) {
     FactoryBot.create(:user)
   }
+  let!(:user_2) {
+    FactoryBot.create(:user2)
+  }
+  let!(:task2) {
+    FactoryBot.create(:task_user_2_creating)
+  }
   before do
     login_as(user, scope: :user)
   end
@@ -17,6 +23,7 @@ describe 'Task', type: :system do
       expect(page).to have_content 'MyString'
       expect(page).to have_content Date.today
       expect(page).to have_content 'work'
+      expect(page).to have_no_content 'MyTaskByUser2'
     end
   end
 

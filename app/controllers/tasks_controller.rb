@@ -7,11 +7,11 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new 
+    @task = current_user.tasks.build 
   end
 
   def confirm_new
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.valid?
 
     else
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if params[:back].present?
       render 'new'

@@ -4,5 +4,5 @@ class Task < ApplicationRecord
   validates :deadline, presence: true, deadline: true
   validates :label, presence: true
   enum status: [:waiting, :working, :completed]
-  belongs_to :user
+  belongs_to :user, optional: true
 end
