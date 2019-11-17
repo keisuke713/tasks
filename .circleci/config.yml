@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+<<<<<<< HEAD
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: circleci/golang:1.8-jessie
@@ -71,5 +72,68 @@ jobs:
           path: /tmp/test-results
           destination: raw-test-output
 
+=======
+    working_directory: ~/circleci-demo-ruby-rails
+    
+    # Primary container image where all commands run
+    
+    docker:
+      - image: circleci/ruby:2.6.3-node-browsers
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
+    
+    # Service container image available at `host: localhost`
+    
+      - image: circleci/postgres:9.6.2-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle-test_test
+        
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - rails-demo-{{ checksum "Gemfile.lock" }}
+            - rails-demo-
+
+      # Bundle install dependencies
+      - run:
+          name: Install dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+
+      - run: sudo apt install -y postgresql-client || true
+
+      # Store bundle cache
+      - save_cache:
+          key: rails-demo-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Align chrome-driver's version installed by chromedriver-helper
+      - run:
+          name: Install Latest Chrome
+          command: |
+            sudo apt install libappindicator3-1
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome.deb
+            sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
+
+      - run:
+          name: Database Setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+
+      - run:
+          name: Parallel RSpec
+          command: bundle exec rspec
+
+      # Save artifacts
+>>>>>>> setting_circleci
       - store_test_results:
           path: /tmp/test-results
