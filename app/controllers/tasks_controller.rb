@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
   before_action :fetch_current_task, only: [:show, :edit, :confirm_edit, :update]
   before_action :set_attributes_to_task, only: [:confirm_edit, :update]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user: current_user) 
   end
 
   def new

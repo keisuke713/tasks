@@ -34,7 +34,7 @@ describe 'Task', type: :system do
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
         fill_in 'Label', with: 'work'
-        click_button 'confirm'
+        click_on 'confirm'
       end
       it 'transition confirm' do
         expect(page).to have_title 'Confirm'
@@ -53,7 +53,7 @@ describe 'Task', type: :system do
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: ''
         fill_in 'Label', with: 'work'
-        click_button
+        click_on
       end
       it 'display error message' do
         expect(page).to have_title 'New Task'
@@ -69,8 +69,8 @@ describe 'Task', type: :system do
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
         fill_in 'Label', with: 'work'
-        click_button 'confirm'
-        click_button 'create'
+        click_on 'confirm'
+        click_on 'create'
       end
       it 'is registered' do
         expect(page).to have_title 'Task'
@@ -88,8 +88,8 @@ describe 'Task', type: :system do
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
         fill_in 'Label', with: 'work'
-        click_button 'confirm'
-        click_button 'back'
+        click_on 'confirm'
+        click_on 'back'
       end
       it 'back to create screen' do
         expect(page).to have_title 'New Task'
@@ -106,14 +106,15 @@ describe 'Task', type: :system do
     }
     before do
       visit task_path task.id
-      click_link '編集する'
+      click_on '編集する'
     end
     context 'parameter is correct' do
       before do
         fill_in 'Title', with: 'Edit task'
-        click_button 'confirm'
+        click_on 'confirm'
       end
       it 'transition confirm screen' do
+        save_and_open_page
         expect(page).to have_title 'Confirm'
         expect(page).to have_content 'Edit task'
         expect(page).to have_content 'MyString'
@@ -126,7 +127,7 @@ describe 'Task', type: :system do
     context 'parameter is incorrect' do
       before do
         fill_in 'Title', with: ''
-        click_button 'confirm'
+        click_on 'confirm'
       end
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
@@ -137,8 +138,8 @@ describe 'Task', type: :system do
     context 'edit task' do
       before do
         fill_in 'Title', with: 'Edit Task'
-        click_button 'confirm'
-        click_button 'update'
+        click_on 'confirm'
+        click_on 'update'
       end
       it 'can be updated' do
         expect(page).to have_title 'Task'
@@ -151,8 +152,8 @@ describe 'Task', type: :system do
     context 'back to edit screen' do
       before do
         fill_in 'Title', with: 'Edit Task'
-        click_button 'confirm'
-        click_button 'back'
+        click_on 'confirm'
+        click_on 'back'
       end
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
@@ -174,7 +175,7 @@ describe 'Task', type: :system do
         select date.mon, from: 'task_deadline_2i'
         select date.day, from: 'task_deadline_3i'
         fill_in 'Label', with: 'work'
-        click_button 'confirm'
+        click_on 'confirm'
       end
       it 'is displayed error message' do
         expect(page).to have_content "#{date}は過去の日付です"
