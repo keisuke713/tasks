@@ -105,6 +105,7 @@ describe 'Task', type: :system do
       FactoryBot.create(:task)
     }
     before do
+      login_as(user, scope: :user)
       visit task_path task.id
       click_on '編集する'
     end
@@ -114,7 +115,6 @@ describe 'Task', type: :system do
         click_on 'confirm'
       end
       it 'transition confirm screen' do
-        save_and_open_page
         expect(page).to have_title 'Confirm'
         expect(page).to have_content 'Edit task'
         expect(page).to have_content 'MyString'
