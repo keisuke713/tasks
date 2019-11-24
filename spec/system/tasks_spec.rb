@@ -61,6 +61,24 @@ describe 'Task', type: :system do
         expect(page).to have_button 'confirm'
       end
     end
+    context 'set a deadline before today' do
+      let(:date) {
+        Date.today - 1 
+      }
+      before do
+        visit new_task_path
+        fill_in 'Title', with: 'MyTask'
+        fill_in 'Detail', with: 'MyDetail'
+        select date.year, from: 'task_deadline_1i'
+        select date.mon, from: 'task_deadline_2i'
+        select date.day, from: 'task_deadline_3i'
+        fill_in 'Label', with: 'work'
+        click_on 'confirm'
+      end
+      it 'is displayed error message' do
+        expect(page).to have_content "#{date}は過去の日付です"
+      end
+    end
   end
   describe 'confirm_new_task' do
     context 'create_new_task' do
@@ -105,7 +123,6 @@ describe 'Task', type: :system do
       FactoryBot.create(:task)
     }
     before do
-      login_as(user, scope: :user)
       visit task_path task.id
       click_on '編集する'
     end
@@ -135,20 +152,6 @@ describe 'Task', type: :system do
         expect(page).to have_button 'confirm'
       end
     end
-    context 'edit task' do
-      before do
-        fill_in 'Title', with: 'Edit Task'
-        click_on 'confirm'
-        click_on 'update'
-      end
-      it 'can be updated' do
-        expect(page).to have_title 'Task'
-        expect(page).to have_content 'Edit Task'
-        expect(page).to have_content 'MyString'
-        expect(page).to have_content task.deadline
-        expect(page).to have_content 'work'
-      end
-    end
     context 'back to edit screen' do
       before do
         fill_in 'Title', with: 'Edit Task'
@@ -159,26 +162,6 @@ describe 'Task', type: :system do
         expect(page).to have_title 'Edit Task'
         expect(page).to have_content 'Edit Task'
         expect(page).to have_button 'confirm'
-      end
-    end
-  end
-  describe "validate_deadline" do
-    context 'set a deadline before today' do
-      let(:date) {
-        Date.today - 1 
-      }
-      before do
-        visit new_task_path
-        fill_in 'Title', with: 'MyTask'
-        fill_in 'Detail', with: 'MyDetail'
-        select date.year, from: 'task_deadline_1i'
-        select date.mon, from: 'task_deadline_2i'
-        select date.day, from: 'task_deadline_3i'
-        fill_in 'Label', with: 'work'
-        click_on 'confirm'
-      end
-      it 'is displayed error message' do
-        expect(page).to have_content "#{date}は過去の日付です"
       end
     end
   end
