@@ -101,7 +101,7 @@ describe 'Task', type: :system do
         select date.year, from: 'task_deadline_1i'
         select date.mon, from: 'task_deadline_2i'
         select date.day, from: 'task_deadline_3i'
-        select 'waiting', from: 'status'
+        select 'waiting', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
       end
@@ -116,7 +116,7 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
-        select 'waiting', from: 'status'
+        select 'waiting', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
         click_on 'create'
