@@ -5,4 +5,9 @@ class Task < ApplicationRecord
   validates :label, presence: true
   enum status: [:waiting, :working, :completed]
   belongs_to :user, optional: true
+
+  def created_by_current_user?(current_user)
+    byebug
+    user_id == current_user.id
+  end
 end

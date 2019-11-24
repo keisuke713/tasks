@@ -77,7 +77,7 @@ class TasksController < ApplicationController
   end
 
   def confirm_user_created_task
-    if @task.user_id != current_user.id
+    unless @task.created_by_current_user?(current_user)     
       flash[:danger] = '自分の作成したタスク以外は閲覧できません' 
       redirect_to '/' 
     end
