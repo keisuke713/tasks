@@ -25,8 +25,33 @@ describe 'Task', type: :system do
       expect(page).to have_content 'work'
       expect(page).to have_no_content 'MyTaskByUser2'
     end
+  end  
+  describe 'show' do
+    context 'show my task' do
+      let(:task) {
+        FactoryBot.create(:task)
+      }
+      before do
+        visit task_path task.id
+      end
+      it 'display task' do
+        expect(page).to have_title 'Task'
+        expect(page).to have_content 'MyTask'
+        expect(page).to have_content 'MyString'
+        expect(page).to have_content Date.today
+        expect(page).to have_content 'work'
+      end
+    end
+    context 'show other users task' do
+      before do
+        visit task_path task2.id
+      end
+      it 'redirect all tasks' do
+        expect(page).to have_title 'All tasks'
+        expect(page).to have_content '自分の作成したタスク以外は閲覧できません'
+      end
+    end
   end
-
   describe 'create_new_task' do
     context 'parameter is correct' do
       before do
