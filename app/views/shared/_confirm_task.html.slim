@@ -16,6 +16,10 @@
         = @task.deadline
         = f.hidden_field :deadline, value: @task.deadline
       .item
+        = f.label :status
+        = @task.status
+        = f.hidden_field :status, value: @task.status
+      .item
         = f.label :label
         = @task.label
         = f.hidden_field :label, value: @task.label

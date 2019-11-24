@@ -65,7 +65,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline, :label)
+    params.require(:task).permit(:title, :detail, :deadline, :status, :label)
   end
 
   def fetch_current_task
@@ -76,7 +76,7 @@ class TasksController < ApplicationController
     @task.attributes = task_params
   end
 
-  def confirm_user_created_task
+  def confirm_user_created_task 
     unless @task.created_by_current_user?(current_user)     
       flash[:danger] = '自分の作成したタスク以外は閲覧できません' 
       redirect_to '/' 
