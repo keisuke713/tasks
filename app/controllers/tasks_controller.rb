@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :confirm_new, :create, :show]
   before_action :fetch_current_task, only: [:show, :edit, :confirm_edit, :update]
+  before_action :confirm_user_created_task, only: :show
   before_action :set_attributes_to_task, only: [:confirm_edit, :update]
 
   def index
@@ -73,5 +74,12 @@ class TasksController < ApplicationController
 
   def set_attributes_to_task
     @task.attributes = task_params
+  end
+
+  def confirm_user_created_task
+    if @task.user_id != current_user.id
+      flash[:danger] = '自分の作成したタスク以外は閲覧できません' 
+      redirect_to '/' 
+    end
   end
 end

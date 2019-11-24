@@ -2,6 +2,7 @@
 .container
   .row
     h1 Task  
+    = flash[:success]
     = render 'shared/task', task: @task
   
 

@@ -2,5 +2,6 @@
 .container
   .row
     h1 All Tasks
+    = flash[:danger]
     .tasks
       = render partial: 'shared/task', collection: @tasks
