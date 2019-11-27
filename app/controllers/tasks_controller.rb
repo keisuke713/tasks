@@ -5,7 +5,8 @@ class TasksController < ApplicationController
   before_action :set_attributes_to_task, only: [:confirm_edit, :update]
 
   def index
-    @tasks = Task.where(user: current_user) 
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result(distinct: true)
   end
 
   def new
