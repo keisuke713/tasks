@@ -7,8 +7,8 @@
       p= f.search_field :title_cont
       p= f.label :deadline_gteq, '締め切り'
       p= f.search_field :deadline_gteq
-      p= f.label :status_cont, 'ステータス'
-      p= f.search_field :status_cont
+      p= f.label :status_eq, 'ステータス'
+      p= f.select :status_eq, Task.statuses      
       p= f.submit
     = link_to '新規登録', new_task_path, class: 'btn btn-primary mb-3'
     = flash[:danger]
