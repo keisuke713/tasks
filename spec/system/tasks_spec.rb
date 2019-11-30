@@ -22,7 +22,7 @@ describe 'Task', type: :system do
       expect(page).to have_content 'MyTask'
       expect(page).to have_content 'MyString'
       expect(page).to have_content Date.today
-      expect(page).to have_content 'waiting'
+      expect(page).to have_content 'untouched'
       expect(page).to have_content 'work'
       expect(page).to have_no_content 'MyTaskByUser2'
     end
@@ -40,7 +40,7 @@ describe 'Task', type: :system do
         expect(page).to have_content 'MyTask'
         expect(page).to have_content 'MyString'
         expect(page).to have_content Date.today
-        expect(page).to have_content 'waiting'
+        expect(page).to have_content 'untouched'
         expect(page).to have_content 'work'
       end
     end
@@ -60,16 +60,17 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
-        select 'waiting', from: 'Status'
+        select 'untouched', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
       end
       it 'transition confirm' do
+        save_and_open_page
         expect(page).to have_title 'Confirm'
         expect(page).to have_content 'MyTask'
         expect(page).to have_content 'MyDetail'
         expect(page).to have_content Date.today
-        expect(page).to have_content 'waiting'
+        expect(page).to have_content 'untouched'
         expect(page).to have_content 'work'
         expect(page).to have_button 'back'
         expect(page).to have_button 'create'
@@ -101,7 +102,7 @@ describe 'Task', type: :system do
         select date.year, from: 'task_deadline_1i'
         select date.mon, from: 'task_deadline_2i'
         select date.day, from: 'task_deadline_3i'
-        select 'waiting', from: 'Status'
+        select 'untouched', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
       end
@@ -116,7 +117,7 @@ describe 'Task', type: :system do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
         fill_in 'Detail', with: 'MyDetail'
-        select 'waiting', from: 'Status'
+        select 'untouched', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
         click_on 'create'
@@ -127,7 +128,7 @@ describe 'Task', type: :system do
         expect(page).to have_content 'MyDetail'
         expect(page).to have_content 'work'
         expect(page).to have_content Date.today 
-        expect(page).to have_content 'waiting'
+        expect(page).to have_content 'untouched'
         expect(page).to have_link '編集する'
       end
     end
@@ -167,7 +168,7 @@ describe 'Task', type: :system do
         expect(page).to have_content 'Edit task'
         expect(page).to have_content 'MyString'
         expect(page).to have_content task.deadline
-        expect(page).to have_content 'waiting'
+        expect(page).to have_content 'untouched'
         expect(page).to have_content 'work'
         expect(page).to have_button 'update'
         expect(page).to have_button 'back'
