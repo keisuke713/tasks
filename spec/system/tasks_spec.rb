@@ -212,7 +212,6 @@ describe 'Task', type: :system do
         click_on 'back'
       end
       it_behaves_like "display Edit Task title"
-      it_behaves_like "display Edit task"
       it_behaves_like "inputed MyString in Detail"
       it_behaves_like "display confirm button"
       it "display edit task" do
