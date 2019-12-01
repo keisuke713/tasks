@@ -13,17 +13,38 @@ describe 'Task', type: :system do
   before do
     login_as(user, scope: :user)
   end
+  shared_examples "display task's title" do
+    it { expect(page).to have_content 'MyTask' }
+  end
+  shared_examples "display task's detail" do
+    it { expect(page).to have_content 'MyString' }
+  end
+  shared_examples "display task's deadline" do
+    it { expect(page).to have_content Date.today }
+  end
+  shared_examples "display task's status" do
+    it { expect(page).to have_content 'untouched' }
+  end
+  shared_examples "display task's label" do
+    it { expect(page).to have_content 'work' }
+  end
+  shared_examples "display confirm button" do
+    it { expect(page).to have_button 'confirm' }
+  end
+  shared_examples "display back button" do
+    it { expect(page).to have_button 'back' }
+  end
   describe 'index' do
     before do
       FactoryBot.create(:task)  
       visit '/'
     end
+    it_behaves_like "display task's title"
+    it_behaves_like "display task's detail"
+    it_behaves_like "display task's deadline"
+    it_behaves_like "display task's status"
+    it_behaves_like "display task's label"
     it 'show task' do
-      expect(page).to have_content 'MyTask'
-      expect(page).to have_content 'MyString'
-      expect(page).to have_content Date.today
-      expect(page).to have_content 'untouched'
-      expect(page).to have_content 'work'
       expect(page).to have_no_content 'MyTaskByUser2'
     end
   end  
@@ -35,14 +56,11 @@ describe 'Task', type: :system do
       before do
         visit task_path task.id
       end
-      it 'display task' do
-        expect(page).to have_title 'Task'
-        expect(page).to have_content 'MyTask'
-        expect(page).to have_content 'MyString'
-        expect(page).to have_content Date.today
-        expect(page).to have_content 'untouched'
-        expect(page).to have_content 'work'
-      end
+      it_behaves_like "display task's title"
+      it_behaves_like "display task's detail"
+      it_behaves_like "display task's deadline"
+      it_behaves_like "display task's status"
+      it_behaves_like "display task's label"
     end
     context 'show other users task' do
       before do
@@ -59,22 +77,21 @@ describe 'Task', type: :system do
       before do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
-        fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Detail', with: 'MyString'
         select 'untouched', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
       end
       it 'transition confirm' do
-        save_and_open_page
         expect(page).to have_title 'Confirm'
-        expect(page).to have_content 'MyTask'
-        expect(page).to have_content 'MyDetail'
-        expect(page).to have_content Date.today
-        expect(page).to have_content 'untouched'
-        expect(page).to have_content 'work'
-        expect(page).to have_button 'back'
         expect(page).to have_button 'create'
       end
+      it_behaves_like "display task's title"
+      it_behaves_like "display task's detail"
+      it_behaves_like "display task's deadline"
+      it_behaves_like "display task's status"
+      it_behaves_like "display task's label"
+      it_behaves_like "display back button"
     end
 
     context 'parameter is incorrect' do
@@ -88,8 +105,8 @@ describe 'Task', type: :system do
       it 'display error message' do
         expect(page).to have_title 'New Task'
         expect(page).to have_text "Detail can't be blank"
-        expect(page).to have_button 'confirm'
       end
+      it_behaves_like "display confirm button"
     end
     context 'set a deadline before today' do
       let(:date) {
@@ -98,7 +115,7 @@ describe 'Task', type: :system do
       before do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
-        fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Detail', with: 'MyString'
         select date.year, from: 'task_deadline_1i'
         select date.mon, from: 'task_deadline_2i'
         select date.day, from: 'task_deadline_3i'
@@ -116,7 +133,7 @@ describe 'Task', type: :system do
       before do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
-        fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Detail', with: 'MyString'
         select 'untouched', from: 'Status'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
@@ -124,19 +141,19 @@ describe 'Task', type: :system do
       end
       it 'is registered' do
         expect(page).to have_title 'Task'
-        expect(page).to have_content 'MyTask'
-        expect(page).to have_content 'MyDetail'
-        expect(page).to have_content 'work'
-        expect(page).to have_content Date.today 
-        expect(page).to have_content 'untouched'
         expect(page).to have_link '編集する'
       end
+      it_behaves_like "display task's title"
+      it_behaves_like "display task's detail"
+      it_behaves_like "display task's deadline"
+      it_behaves_like "display task's status"
+      it_behaves_like "display task's label"
     end
     context 'back to create screen' do
       before do
         visit new_task_path
         fill_in 'Title', with: 'MyTask'
-        fill_in 'Detail', with: 'MyDetail'
+        fill_in 'Detail', with: 'MyString'
         fill_in 'Label', with: 'work'
         click_on 'confirm'
         click_on 'back'
@@ -166,13 +183,13 @@ describe 'Task', type: :system do
       it 'transition confirm screen' do
         expect(page).to have_title 'Confirm'
         expect(page).to have_content 'Edit task'
-        expect(page).to have_content 'MyString'
-        expect(page).to have_content task.deadline
-        expect(page).to have_content 'untouched'
-        expect(page).to have_content 'work'
         expect(page).to have_button 'update'
-        expect(page).to have_button 'back'
       end
+      it_behaves_like "display task's detail"
+      it_behaves_like "display task's deadline"
+      it_behaves_like "display task's status"
+      it_behaves_like "display task's label"
+      it_behaves_like "display back button"
     end
     context 'parameter is incorrect' do
       before do
@@ -182,8 +199,8 @@ describe 'Task', type: :system do
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
         expect(page).to have_content "Title can't be blank"
-        expect(page).to have_button 'confirm'
       end
+      it_behaves_like "display confirm button"
     end
     context 'back to edit screen' do
       before do
@@ -194,8 +211,8 @@ describe 'Task', type: :system do
       it 'render new screen' do
         expect(page).to have_title 'Edit Task'
         expect(page).to have_content 'Edit Task'
-        expect(page).to have_button 'confirm'
       end
+      it_behaves_like "display confirm button"
     end
   end
 end
