@@ -34,6 +34,9 @@ describe 'Task', type: :system do
   shared_examples "display back button" do
     it { expect(page).to have_button 'back' }
   end
+  shared_examples "inputed MyString in Detail" do
+    it { expect(page).to have_field 'Detail', with: 'MyString' }
+  end
   describe 'index' do
     before do
       FactoryBot.create(:task)  
@@ -44,7 +47,7 @@ describe 'Task', type: :system do
     it_behaves_like "display task's deadline"
     it_behaves_like "display task's status"
     it_behaves_like "display task's label"
-    it 'show task' do
+    it "doesn't display other's task" do
       expect(page).to have_no_content 'MyTaskByUser2'
     end
   end  
@@ -158,13 +161,11 @@ describe 'Task', type: :system do
         click_on 'confirm'
         click_on 'back'
       end
-      it 'back to create screen' do
+      it 'back to new screen' do
         expect(page).to have_title 'New Task'
-        expect(page).to have_content 'Title'
-        expect(page).to have_content 'Detail'
-        expect(page).to have_content 'Deadline'
-        expect(page).to have_content 'Label'
+        expect(page).to have_field 'Title', with: 'MyTask'
       end
+      it_behaves_like 'inputed MyString in Detail'
     end
   end
   describe 'edit task' do
@@ -175,6 +176,9 @@ describe 'Task', type: :system do
       visit task_path task.id
       click_on '編集する'
     end
+    shared_examples "display Edit Task title" do
+      it { expect(page).to have_title 'Edit Task' }
+    end
     context 'parameter is correct' do
       before do
         fill_in 'Title', with: 'Edit task'
@@ -182,7 +186,6 @@ describe 'Task', type: :system do
       end
       it 'transition confirm screen' do
         expect(page).to have_title 'Confirm'
-        expect(page).to have_content 'Edit task'
         expect(page).to have_button 'update'
       end
       it_behaves_like "display task's detail"
@@ -197,22 +200,24 @@ describe 'Task', type: :system do
         click_on 'confirm'
       end
       it 'render new screen' do
-        expect(page).to have_title 'Edit Task'
         expect(page).to have_content "Title can't be blank"
       end
+      it_behaves_like "display Edit Task title"
       it_behaves_like "display confirm button"
     end
     context 'back to edit screen' do
       before do
-        fill_in 'Title', with: 'Edit Task'
+        fill_in 'Title', with: 'Edit task'
         click_on 'confirm'
         click_on 'back'
       end
-      it 'render new screen' do
-        expect(page).to have_title 'Edit Task'
-        expect(page).to have_content 'Edit Task'
-      end
+      it_behaves_like "display Edit Task title"
+      it_behaves_like "display Edit task"
+      it_behaves_like "inputed MyString in Detail"
       it_behaves_like "display confirm button"
+      it "display edit task" do
+        expect(page).to have_field 'Title', with: 'Edit task'
+      end
     end
   end
 end
