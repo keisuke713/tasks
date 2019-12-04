@@ -5,6 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :tasks
   def self.shout
-    p 'Hello world'
+    self.all.each do |user|
+      task_close_deadline =
+      user.tasks.select do |task|
+        task.deadline == Date.today
+      end
+      p task_close_deadline
+    end
   end
 end
