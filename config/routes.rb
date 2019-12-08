@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   resources :tasks, except: :index do
     post :confirm, action: :confirm_new, on: :new
     patch :confirm, action: :confirm_edit, on: :member, as: :confirm_edit
+    resources :change_status, only: :update, module: :tasks
   end
 end
