@@ -21,6 +21,6 @@
 set :output, File.join(Whenever.path, "log", "cron.log")
 set :environment, :development
 
-every 1.minutes do
+every 1.day, at: '15:22' do
   runner 'TaskMailer.send_email'
 end
