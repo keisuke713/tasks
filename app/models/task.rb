@@ -9,4 +9,8 @@ class Task < ApplicationRecord
   def created_by_current_user?(current_user)
     user_id == current_user&.id
   end
+  
+  def deadline_is_today?
+    self.deadline == Date.today
+  end
 end

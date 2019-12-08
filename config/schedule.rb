@@ -22,5 +22,5 @@ set :output, File.join(Whenever.path, "log", "cron.log")
 set :environment, :development
 
 every 1.minutes do
-  runner 'User.shout' 
+  runner 'TaskMailer.send_email'
 end
