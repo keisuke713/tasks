@@ -9,6 +9,12 @@ class Task < ApplicationRecord
   def created_by_current_user?(current_user)
     user_id == current_user&.id
   end
+
+  def self.fetch_instance_close_deadline(user)
+    user.tasks.select do |task|
+      task.deadline_is_today?
+    end
+  end
   
   def deadline_is_today?
     self.deadline == Date.today
