@@ -4,4 +4,4 @@ ul
   li
     - @tasks.each do |task|
       | タイトル
-      = task.title
+      p= link_to task.title, task_url(task.id)
