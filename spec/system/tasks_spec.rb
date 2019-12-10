@@ -52,10 +52,10 @@ describe 'Task', type: :system do
     end
   end  
   describe 'show' do
-    context 'show my task' do
-      let(:task) {
+    let(:task) {
         FactoryBot.create(:task)
       }
+    context 'show my task' do
       before do
         visit task_path task.id
       end
@@ -64,6 +64,18 @@ describe 'Task', type: :system do
       it_behaves_like "display task's deadline"
       it_behaves_like "display task's status"
       it_behaves_like "display task's label"
+      it 'display finish button' do
+        expect(page).to have_content '完了'
+      end
+    end
+    context 'change status from untouched to done' do
+      before do
+        task.update(status: 'done')
+        visit task_path task.id
+      end
+      it "don't display finish button" do
+        expect(page).to have_no_content '完了'
+      end
     end
     context 'show other users task' do
       before do
