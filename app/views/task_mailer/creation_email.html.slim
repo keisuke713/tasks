@@ -2,6 +2,14 @@
 
 ul
   li
-    - @tasks.each do |task|
+    - @tasks_close_deadline.each do |task|
+      | タイトル
+      p= link_to task.title, task_url(task.id)
+
+| 以下のタスクは既に締め切りが過ぎています。
+
+ul
+  li
+    - @tasks_passed_deadline.each do |task|
       | タイトル
       p= link_to task.title, task_url(task.id)

@@ -15,7 +15,13 @@ class Task < ApplicationRecord
       task.deadline_is_today?
     end
   end
-  
+
+  def self.fetch_instance_passed_deadline(user)
+    user.tasks.select do |task|
+      task.deadline < Date.today && task.status != 'done'
+    end
+  end
+
   def deadline_is_today?
     self.deadline == Date.today
   end
