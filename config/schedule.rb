@@ -24,7 +24,3 @@ set :environment, :development
 every 1.day, at: '7:00' do
   runner 'TaskMailer.send_email'
 end
-
-every 1.minutes do
-  runner 'TaskMailer.send_email'
-end
