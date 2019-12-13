@@ -64,7 +64,7 @@ class TasksController < ApplicationController
 
   def import
     current_user.tasks.import(params[:file])
-    redirect_to root_path 
+    redirect_to root_path, flash[:success] = 'success in importing file' 
   end
 
   private

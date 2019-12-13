@@ -18,7 +18,13 @@
       .search_box
         = f.submit
       = sort_link(@q, :deadline, '締め切り')
+
     = link_to '新規登録', new_task_path, class: 'btn btn-primary mb-3'
+
+    = form_tag import_tasks_path, multipart: true, class: 'mb-3' do
+      = file_field_tag :file
+      = submit_tag "インポート", class: 'btn btn-primary'
+
     = flash[:danger]
     .tasks
       -if @tasks.empty?
