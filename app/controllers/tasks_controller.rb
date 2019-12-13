@@ -62,6 +62,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def import
+    current_user.tasks.import(params[:file])
+    redirect_to root_path 
+  end
+
   private
 
   def task_params
