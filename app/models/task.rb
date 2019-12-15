@@ -27,6 +27,18 @@ class Task < ApplicationRecord
       end
     end
 
+    def csv_attributes
+      %W(title detail deadline status label user_id created_at updated_at)
+    end
+
+    def generate_csv
+      CSV.generate(headers: true) do |csv|
+        csv << csv_attributes
+        all.each do |task|
+          csv << csv_attributes.map { |attr| task.send(attr) }
+        end
+      end
+    end
     def import(file)
       CSV.foreach(file.path, headers: true) do |row|
         task = new
