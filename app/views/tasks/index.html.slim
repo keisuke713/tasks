@@ -24,6 +24,7 @@
     = form_tag import_tasks_path, multipart: true, class: 'mb-3' do
       = file_field_tag :file
       = submit_tag "インポート", class: 'btn btn-primary'
+    = link_to 'エクスポート', root_path(format: :csv), class: 'btn btn-primary mb-3'
 
     = flash[:danger]
     .tasks
