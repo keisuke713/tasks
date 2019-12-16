@@ -68,6 +68,10 @@ class TasksController < ApplicationController
   end
 
   def import
+    if params[:file].nil?
+      flash[:danger] = 'fileを選択してください'
+      return redirect_to root_path
+    end
     current_user.tasks.import(params[:file])
     flash[:success] = 'インポートに成功しました。'
     redirect_to root_path  
